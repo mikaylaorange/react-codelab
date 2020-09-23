@@ -6,9 +6,10 @@ test('handles user input on button click', async () => {
   window.prompt = jest.fn(() => 'input from the user');
   console.log = jest.fn();
 
-  const {getByText} = render(<TextInput/>);
-  fireEvent.click(getByText('Button'));
+  const {getByText} = render(<TextInput promptText = "Name?"/>);
+  fireEvent.click(getByText('Name?'));
 
-  expect(window.prompt).toHaveBeenCalledWith('Please provide input');
+  expect(window.prompt).toHaveBeenCalledWith('Name?');
   expect(console.log).toHaveBeenCalledWith('input from the user');
+  expect(getByText(/input from the user/i)).toBeInTheDocument();
 })
