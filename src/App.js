@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import TextInput from './TextInput.js';
-import {Grid} from '@material-ui/core';
-import './App.css';
+import React, { useState } from "react";
+import logo from "./logo.svg";
+import TextInput from "./TextInput.js";
+import LoginButton from "./LoginButton.js";
+import "./App.css";
+import UserResponses from "./UserResponses.js";
 
 function App() {
-  let gridItems = {
-    0: {size: 2, label: "A"},
-    1: {size: 2, label: "B"},
-    2: {size: 2, label: "C"},
-    3: {size: 3, label: "D"},
-    4: {size: 3, label: "E"},
-    5: {size: 3, label: "F"},
-
-  }
+  const [user, setUser] = useState(null);
   return (
     <div className="App">
       <header className="App-header">
+        <LoginButton setUser={(user) => setUser(user)}/>
+        {user != null && <p>Welcome, {user.displayName}</p>}
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Hello World
-        </p>
+        <p>Hello World</p>
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -29,18 +22,9 @@ function App() {
         >
           Learn React
         </a>
-        <TextInput promptText="Name?"/>
-        <TextInput promptText="Hometown?"/>
-        <Grid container justify="center">
-          {Object.keys(gridItems).map((rowKey) => {
-            return(
-              <Grid item  spacing={6} key={rowKey} xs={gridItems[rowKey].size}>
-                {gridItems[rowKey].label}
-              </Grid>
-            );
-          })}
-        </Grid>
-
+        <TextInput promptText="Name?" field="name" user={user}/>
+        <TextInput promptText="Hometown?" field="hometown" user={user}/>
+        <UserResponses/>
       </header>
     </div>
   );
